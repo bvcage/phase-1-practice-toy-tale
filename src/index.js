@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // load existing toy inventory
+
   const toyCollection = document.querySelector('#toy-collection');
   fetch('http://localhost:3000/toys')
   .then((response) => response.json())
@@ -28,19 +29,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // post new toy to inventory
+  
   const newToyForm = document.querySelector('form.add-toy-form');
-  newToyForm.addEventListener('submit', (event) => postNewToy(event, newToyForm));
+  newToyForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let newToyName = newToyForm.querySelector('[name="name"]');
+    let newToyImg = newToyForm.querySelector('[name="image"]');
+    postNewToy(toyCollection, newToyName.value, newToyImg.value);
+    newToyName.value = '';
+    newToyImg.value = '';
+  });
 
 });
 
-function postNewToy (event, newToyForm) {
-  event.preventDefault();
-  const newToyName = newToyForm.querySelector('[name="name"]');
-  const newToyImg = newToyForm.querySelector('[name="image"]');
+
+
+function postNewToy (toyCollection, newToyName, newToyImg = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg") {
+  
+  if (newToyImg === null || newToyImg === '' ) {
+    newToyImg = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
+  }
 
   const newToyObj = {
-    "name": newToyName.value,
-    "image": newToyImg.value,
+    "name": newToyName,
+    "image": newToyImg,
     "likes": 0
   }
 
@@ -63,6 +75,8 @@ function postNewToy (event, newToyForm) {
     console.log(error);
   });
 }
+
+
 
 function createToyCard(toyObj) {
 
@@ -102,6 +116,7 @@ function createToyCard(toyObj) {
 
     return toyCard;
 }
+
 
 function updateLikeCount(toyCard, toyId) {
 
