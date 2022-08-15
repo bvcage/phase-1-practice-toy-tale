@@ -29,41 +29,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // post new toy to inventory
   const newToyForm = document.querySelector('form.add-toy-form');
+  newToyForm.addEventListener('submit', (event) => postNewToy(event, newToyForm));
+
+});
+
+function postNewToy (event, newToyForm) {
+  event.preventDefault();
   const newToyName = newToyForm.querySelector('[name="name"]');
   const newToyImg = newToyForm.querySelector('[name="image"]');
 
-  newToyForm.addEventListener('submit', (event) => {
-    
-    event.preventDefault();
+  const newToyObj = {
+    "name": newToyName.value,
+    "image": newToyImg.value,
+    "likes": 0
+  }
 
-    const newToyObj = {
-      "name": newToyName.value,
-      "image": newToyImg.value,
-      "likes": 0
-    }
-  
-    const newToyPost = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(newToyObj)
-    }
+  const newToyPost = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(newToyObj)
+  }
 
-    fetch('http://localhost:3000/toys', newToyPost)
-    .then((response) => response.json())
-    .then((data) => {
-      const newToyCard = createToyCard(data);
-      toyCollection.appendChild(newToyCard);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
+  fetch('http://localhost:3000/toys', newToyPost)
+  .then((response) => response.json())
+  .then((data) => {
+    const newToyCard = createToyCard(data);
+    toyCollection.appendChild(newToyCard);
+  })
+  .catch((error) => {
+    console.log(error);
   });
-
-});
+}
 
 function createToyCard(toyObj) {
 
@@ -88,7 +87,7 @@ function createToyCard(toyObj) {
     // add likes
     let toyCardLikes = document.createElement('p');
     toyCardLikes.textContent = `${likes} like`;
-    if (likes > 1) {toyCardLikes.textContent += 's'}
+    if (likes !== 1) {toyCardLikes.textContent += 's'}
     toyCard.appendChild(toyCardLikes);
 
     // add like button
@@ -98,5 +97,39 @@ function createToyCard(toyObj) {
     toyCardLikeBtn.textContent = 'Like ❤️';
     toyCard.appendChild(toyCardLikeBtn);
 
+    // add update like button functionality
+    toyCardLikeBtn.addEventListener('click', (event) => updateLikeCount(toyCard, id));
+
     return toyCard;
+}
+
+function updateLikeCount(toyCard, toyId) {
+
+  let numLikes = parseInt(toyCard.querySelector('p').textContent.split(' ')[0]);
+  numLikes += 1;
+
+  const newToyObj = {
+    "likes": numLikes
+  }
+
+  const newToyPatch = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(newToyObj)
+  }
+
+  fetch(`http://localhost:3000/toys/${toyId}`, newToyPatch)
+  .then((response) => response.json())
+  .then((data) => {
+    newLikeString = `${data.likes} like`;
+    if (data.likes !== 1) {newLikeString += 's'}
+    toyCard.querySelector('p').textContent = newLikeString;
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 }
