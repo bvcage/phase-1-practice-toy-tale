@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
       toyCard.classList.add('card');
 
       // populate card
-      let {name, image, likes} = toyObj;
+      let {name, image, likes, id} = toyObj;
 
         // add toy name
         let toyCardName = document.createElement('h2');
@@ -46,8 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // add toy likes
         let toyCardLikes = document.createElement('p');
-        toyCardLikes.textContent = likes;
+        toyCardLikes.textContent = `${likes} like`;
+        if (likes > 1) {toyCardLikes.textContent += 's'}
         toyCard.appendChild(toyCardLikes);
+
+        // add like button
+        let toyCardLikeBtn = document.createElement('button');
+        toyCardLikeBtn.classList.add('like-btn');
+        toyCardLikeBtn.id = id;
+        toyCardLikeBtn.textContent = 'Like ❤️';
+        toyCard.appendChild(toyCardLikeBtn);
       
       // append toy card to collection div
       toyCollection.appendChild(toyCard);
