@@ -1,12 +1,15 @@
 let addToy = false;
 
+const DATA_URL = 'http://localhost:3000/toys';
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  // hide & seek new toy form
 
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
 
   addBtn.addEventListener("click", () => {
-    // hide & seek with the form
     addToy = !addToy;
     if (addToy) {
       toyFormContainer.style.display = "block";
@@ -15,8 +18,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // get toy inventory
-  fetch('http://localhost:3000/toys')
+  // upload new toy to database
+
+  const toyForm = document.querySelector('form.add-toy-form');
+  toyForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const inputName = toyForm.querySelector('[name="name"]').value;
+    const inputImg = toyForm.querySelector('[name="image"]').value;
+
+    postNewToy(inputName, inputImg);
+
+  });
+
+  function postNewToy (toyName, toyImg) {
+    newToy = {
+      "name" : toyName,
+      "image" : toyImg,
+      "likes" : 0
+    }
+
+    newPost = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newToy)
+    }
+
+    fetch(DATA_URL, newPost)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => console.log(error));
+
+  }
+
+  // get toy inventory & display
+
+  fetch(DATA_URL)
   .then((response) => response.json())
   .then((data) => logToys(data))
   .catch((error) => console.log(error));
