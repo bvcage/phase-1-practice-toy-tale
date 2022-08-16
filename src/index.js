@@ -1,6 +1,7 @@
 let addToy = false;
 
 const DATA_URL = 'http://localhost:3000/toys';
+const NO_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/240px-No_image_available.svg.png';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -48,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch(DATA_URL, newPost)
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+    .then((toy) => {
+      logToys({toy});
     })
     .catch((error) => console.log(error));
 
@@ -74,8 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function logToyDetails (toyInfo, toyCard) {
 
-    const {id, name, image, likes} = toyInfo;
+    let {id, name, image, likes} = toyInfo;
     const toyId = id;
+
+    // error handling
+    if (image === '') {image = NO_IMAGE}
+    if (likes === ('' || undefined)) {likes = 0}
+
+    // assign values
 
     const h2 = document.createElement('h2');
     h2.textContent = name;
