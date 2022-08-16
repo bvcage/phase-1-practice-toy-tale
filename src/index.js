@@ -96,8 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toyCard.appendChild(img);
 
     const para = document.createElement('p');
-    para.textContent = `${likes} like`;
-    if (likes !== 1) {para.textContent += 's'}
+    para.textContent = likeCountToString(likes);
     toyCard.appendChild(para);
 
     const btn = document.createElement('button');
@@ -134,11 +133,17 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${DATA_URL}/${toyId}`, toyPatch)
     .then((response) => response.json())
     .then((toy) => {
-      likeString.textContent = `${toy.likes} like`;
-      if (toy.likes !== 1) {likeString.textContent += 's'}
+      likeString.textContent = likeCountToString(toy.likes);
     })
     .catch((error) => console.log(error));
     
   }
 
 });
+
+function likeCountToString (numLikes) {
+  if (typeof numLikes !== 'number') {numLikes = parseInt(numLikes)}
+  let string = `${numLikes} like`;
+  if (numLikes !== 1) {string += 's'};
+  return string;
+}
