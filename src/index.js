@@ -26,7 +26,35 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.values(inventory).forEach((toy) => {
       const newCard = document.createElement('div');
       newCard.classList.add('card');
+      logToyDetails(toy, newCard);
       toyCollection.appendChild(newCard);
     });
+  }
+
+  function logToyDetails (toyInfo, toyCard) {
+
+    const {id, name, image, likes} = toyInfo;
+    const toyId = id;
+
+    const h2 = document.createElement('h2');
+    h2.textContent = name;
+    toyCard.appendChild(h2);
+
+    const img = document.createElement('img');
+    img.classList.add('toy-avatar');
+    img.src = image;
+    toyCard.appendChild(img);
+
+    const para = document.createElement('p');
+    para.textContent = `${likes} like`;
+    if (likes !== 1) {para.textContent += 's'}
+    toyCard.appendChild(para);
+
+    const btn = document.createElement('button');
+    btn.classList.add('like-btn');
+    btn.id = toyId;
+    btn.textContent = 'Like ❤️';
+    toyCard.appendChild(btn);
+
   }
 });
