@@ -4,13 +4,13 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 5
+      "likes": 6
     },
     {
       "id": 2,
       "name": "Buzz Lightyear",
       "image": "http://www.pngmart.com/files/6/Buzz-Lightyear-PNG-Transparent-Picture.png",
-      "likes": 8
+      "likes": 10
     },
     {
       "id": 3,
@@ -47,88 +47,6 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": 1
-    },
-    {
-      "name": "a",
-      "image": "",
-      "id": 9
-    },
-    {
-      "name": "a",
-      "image": "",
-      "id": 10
-    },
-    {
-      "name": "b",
-      "image": "",
-      "likes": 0,
-      "id": 11
-    },
-    {
-      "name": "b",
-      "image": "",
-      "likes": 0,
-      "id": 12
-    },
-    {
-      "name": "c",
-      "image": "",
-      "likes": 0,
-      "id": 13
-    },
-    {
-      "name": "d",
-      "image": "",
-      "likes": 0,
-      "id": 14
-    },
-    {
-      "name": "e",
-      "image": "",
-      "likes": 0,
-      "id": 15
-    },
-    {
-      "name": "f",
-      "image": "",
-      "likes": 0,
-      "id": 16
-    },
-    {
-      "name": "g",
-      "image": "",
-      "likes": 0,
-      "id": 17
-    },
-    {
-      "name": "h",
-      "image": "",
-      "likes": 0,
-      "id": 18
-    },
-    {
-      "name": "g",
-      "image": "",
-      "likes": 0,
-      "id": 19
-    },
-    {
-      "name": "g",
-      "image": "",
-      "likes": 0,
-      "id": 20
-    },
-    {
-      "name": "fds",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/240px-No_image_available.svg.png",
-      "likes": 0,
-      "id": 21
-    },
-    {
-      "name": "fdsfds",
-      "image": "",
-      "likes": 0,
-      "id": 22
     }
   ]
 }

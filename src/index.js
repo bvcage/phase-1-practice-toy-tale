@@ -104,7 +104,41 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.classList.add('like-btn');
     btn.id = toyId;
     btn.textContent = 'Like ❤️';
+    btn.addEventListener('click', (event) => updateLikeCount(event.target.parentNode, toyId));
     toyCard.appendChild(btn);
-
+    
   }
+
+
+  // update like count
+
+  function updateLikeCount (toyCard, toyId) {
+
+    const likeString = toyCard.querySelector('p');
+    let numLikes = parseInt(likeString.textContent.split(' ')[0]);
+    numLikes += 1;
+    
+    updatedVals = {
+      "likes" : numLikes
+    }
+
+    toyPatch = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: "application/json"
+      },
+      body: JSON.stringify(updatedVals)
+    }
+  
+    fetch(`${DATA_URL}/${toyId}`, toyPatch)
+    .then((response) => response.json())
+    .then((toy) => {
+      likeString.textContent = `${toy.likes} like`;
+      if (toy.likes !== 1) {likeString.textContent += 's'}
+    })
+    .catch((error) => console.log(error));
+    
+  }
+
 });
