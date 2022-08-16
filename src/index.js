@@ -25,11 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
   toyForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const inputName = toyForm.querySelector('[name="name"]').value;
-    const inputImg = toyForm.querySelector('[name="image"]').value;
+    const nameInput = toyForm.querySelector('[name="name"]');
+    const imgInput = toyForm.querySelector('[name="image"]');
+    postNewToy(nameInput.value, imgInput.value);
 
-    postNewToy(inputName, inputImg);
-
+    nameInput.value = '';
+    imgInput.value = '';
   });
 
   function postNewToy (toyName, toyImg) {
